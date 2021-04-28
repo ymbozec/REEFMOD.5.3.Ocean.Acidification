@@ -1,0 +1,96 @@
+
+Simulation outputs of coral colony tracking with the reef model
+
+REEFMOD version 5.1 - August 2015
+
+
+============== Model settings =================================
+
+Grid size (number of cells of the squared grid):
+
+
+Cell size (surface in cm2 of a squared cell):
+
+
+Number of time steps (6 months):
+
+
+Number of coral species:
+
+
+Maximum number of coral colonies per species per cell:
+
+
+Number of algal types:
+
+
+Ungrazable substratum (percent of the total area/grid):
+
+
+Initial coral cover (percent of the total area/grid):
+
+
+Initial algal cover (percent of the total area/grid):
+
+
+
+============== File description ===============================
+
+1) track_colony
+
+A list of all coral colonies populated by the model at every time step.
+There is one row per colony per time step. Each column corresponds to:
+
+1- Time step (0 for initial step)
+2- 'Vertical' coordinate of the coral colony on the grid (y-coordinate of the corresponding cell)
+3- 'Horizontal' coordinate of the coral colony on the grid (x-coordinate of the corresponding cell)
+4- Size of the coral colony in cm2 (maximum size is the size of a cell)
+5- Colony ID of the coral
+6- Species ID of the coral
+
+x
+_ _ _ _ _ _
+|_|_|_|_|_|_|
+|_|_|_|_|_|_|
+|_|_|_|_|_|_| y
+|_|_|_|_|_|_|
+|_|_|_|_|_|_|
+
+Notes:
+# Combining 5 & 6 gives a unique identifier to each coral.
+# Dead colonies disappear from the list at the time they die
+
+
+2) track_environ
+
+A list of all other benthic covers populated by the model at every time step.
+There is one row per benthic class per time step. Each column corresponds to:
+
+1- Time step (0 for initial step)
+2- 'Vertical' coordinate of the benthic class on the grid (y-coordinate of the corresponding cell)
+3- 'Horizontal' coordinate of the benthic class on the grid (x-coordinate of the corresponding cell)
+4- Size of the benthic class in cm2
+5- ID of the benthic class: 0-Sand (ungrazable substratum)1-Turf2-Dictyota3-Lobophora4-Halimeda
+
+Notes:
+# Sand takes a full cell
+# Sandy cells cannot be colonized by any other type (nor grazed)
+# Sandy cells are determined randomly at the start of the simulation and remain inchanged over time
+# The dynamics of Halimeda are not implemented yet (0 cm2 at any time in any cell)
+# The sum of Lobophora and Dictyota in a given cell may eventually exceed cell size (10000cm2) as Dict can overtop Lob
+
+
+3) track_disturb
+
+The chronology of external disturbances
+There is one row per time step (one time step = 6 months). Each column corresponds to:
+
+1- Time step (0 for initial step)
+2- Corresponding season (1-winter0-summer)
+3- The occurence of a bleaching event (0-no1-yes)
+4- The category of hurricane (0-no hurricanethen 1-5)
+
+Notes:
+# The initial step (t=0) is winterthe first time step (t=1) is summer and so on.
+# Bleaching and hurricanes cannot occur in winter
+# Bleaching cannot occur when a hurricane occurs
